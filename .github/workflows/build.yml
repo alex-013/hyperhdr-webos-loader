@@ -5,10 +5,10 @@ on:
   workflow_dispatch:
 
 env:
-  TOOLCHAIN_URL: https://github.com/openlgtv/buildroot-nc4/releases/download/webos-a38c582/arm-webos-linux-gnueabi_sdk-buildroot-aarch64.tar.gz
-  TOOLCHAIN_DIR: /opt/arm-webos-linux-gnueabi_sdk-buildroot-aarch64
-  TOOLCHAIN_ENV_FILE: /opt/arm-webos-linux-gnueabi_sdk-buildroot-aarch64/environment-setup
-  TOOLCHAIN_FILE: /opt/arm-webos-linux-gnueabi_sdk-buildroot-aarch64/share/buildroot/toolchainfile.cmake
+  TOOLCHAIN_URL: https://github.com/openlgtv/buildroot-nc4/releases/download/webos-a38c582/arm-webos-linux-gnueabi_sdk-buildroot-x86_64.tar.gz
+  TOOLCHAIN_DIR: /opt/arm-webos-linux-gnueabi_sdk-buildroot
+  TOOLCHAIN_ENV_FILE: /opt/arm-webos-linux-gnueabi_sdk-buildroot/environment-setup
+  TOOLCHAIN_FILE: /opt/arm-webos-linux-gnueabi_sdk-buildroot/share/buildroot/toolchainfile.cmake
   BUILD_DIR: build
 
   CCACHE_CACHE_DIR: .ccache-build
@@ -56,10 +56,16 @@ jobs:
         if: steps.cache-toolchain.outputs.cache-hit != 'true'
         working-directory: /opt
         run: |
+          mkdir ${TOOLCHAIN_DIR}
           wget -q -O toolchain.tar.gz ${TOOLCHAIN_URL}
           tar xf toolchain.tar.gz
+          pwd
+          ls -la
+          ls -la arm-webos-linux-gnueabi_sdk-buildroot
           pushd ${TOOLCHAIN_DIR}
-          ./relocate-sdk.sh
+          pwd
+          ls -la
+          ${TOOLCHAIN_DIR}/relocate-sdk.sh
           popd
           find ${TOOLCHAIN_DIR}/bin -type f -iname "perl*" -delete
 

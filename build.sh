@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Toolchain params
-TOOLCHAIN_DIR=${TOOLCHAIN_DIR:-$HOME/arm-webos-linux-gnueabi_sdk-buildroot-aarch64}
+TOOLCHAIN_DIR=${TOOLCHAIN_DIR:-$HOME/arm-webos-linux-gnueabi_sdk-buildroot}
 TOOLCHAIN_ENV_FILE=${TOOLCHAIN_DIR}/environment-setup
 
 EXEC_FILE=`readlink -f $0`
